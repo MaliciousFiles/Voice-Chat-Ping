@@ -21,4 +21,4 @@ async def on_voice_state_update(member, before, after):
         print("removing role " + get_role(guild, before.channel.name).name + " from member " + member.name)
         await member.remove_roles(get_role(guild, before.channel.name))
 
-client.run('ODM0MjYzMjkxOTY5Nzk4MTY0.YH-WPA.CxzXnhqET_y48U1noH2_AoIdxtk')
+client.run('ODM0MjYzMjkxOTY5Nzk4MTY0.YH-WPA.8KjR4og2bBYJry5DxgQDmz3myOI')
