@@ -34,7 +34,6 @@ async def on_voice_state_update(member, before, after):
         await member.remove_roles(get_role(guild, before.channel.name))
 
 with open("token", "r") as token_file:
-    log_file.write("starting as " + client.user)
     client.run(token_file.read())
     token_file.close()
     log_file.close()
