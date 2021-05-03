@@ -7,6 +7,10 @@ client = discord.Client()
 def get_role(guild, name):
     return discord.utils.get(guild.roles, name=name)
 
+@client.event
+async def on_ready():
+    print(f"connected as {client.user}")
+
 
 @client.event
 async def on_voice_state_update(member, before, after):
