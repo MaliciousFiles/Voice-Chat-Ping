@@ -3,6 +3,8 @@ import discord
 
 client = discord.Client()
 
+log_file = open("vcping_log", "r+")
+
 
 def get_role(guild, name):
     return discord.utils.get(guild.roles, name=name)
@@ -10,7 +12,7 @@ def get_role(guild, name):
 
 @client.event
 async def on_ready():
-    print(f"connected as {client.user}")
+    log_file.write("connected as " + client.user)
 
 
 @client.event
@@ -24,13 +26,15 @@ async def on_voice_state_update(member, before, after):
 
         role = get_role(guild, channel_name)
         await member.add_roles(role)
-        print("giving member " + member.name + " role " + role.name)
+        log_file.write("giving member " + member.name + " role " + role.name)
     if before.channel:
-        print("removing role "
-              + get_role(guild, before.channel.name).name
-              + " from member " + member.name)
+        log_file.write("removing role "
+                       + get_role(guild, before.channel.name).name
+                       + " from member " + member.name)
         await member.remove_roles(get_role(guild, before.channel.name))
 
 with open("token", "r") as token_file:
+    log_file.write("starting as " + client.user)
     client.run(token_file.read())
     token_file.close()
+    log_file.close()
