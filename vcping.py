@@ -3,7 +3,7 @@ import discord
 
 client = discord.Client()
 
-log_file = open("vcping_log", "r+")
+log_file = open("vcping_log", "w+")
 
 
 def get_role(guild, name):
