@@ -5,9 +5,9 @@ After=network.target
 
 [Service]
 User=jd
+WorkingDirectory=/home/jd/vcping-discord-bot
 Type=simple
 ExecStart=/home/jd/vcping-discord-bot/vcping.py
-Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
