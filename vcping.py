@@ -7,6 +7,7 @@ client = discord.Client()
 def get_role(guild, name):
     return discord.utils.get(guild.roles, name=name)
 
+
 @client.event
 async def on_ready():
     print(f"connected as {client.user}")
@@ -30,4 +31,6 @@ async def on_voice_state_update(member, before, after):
               + " from member " + member.name)
         await member.remove_roles(get_role(guild, before.channel.name))
 
-client.run('token')
+with open("token", "r") as token_file:
+    client.run(token_file.read())
+    token_file.close()
