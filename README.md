@@ -1,8 +1,8 @@
-# vcping discord bot
+# Voice Chat Ping discord bot
 
 ## installation
 ```
-TODO
+Go to https://top.gg/bot/834263291969798164, and invite the bot to your server. Thats it!
 ```
 
 ## files
