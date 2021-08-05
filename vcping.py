@@ -1,19 +1,20 @@
-#!/usr/bin/env python3
+from gevent import monkey
+monkey.patch_all()
 import discord
+import os
+from flask import Flask
+from flask_compress import Compress
+from gevent.pywsgi import WSGIServer
+from threading import Thread
 
 client = discord.Client()
-
-log_file = open("vcping_log", "a")
-
 
 def get_role(guild, name):
     return discord.utils.get(guild.roles, name=name)
 
-
 @client.event
 async def on_ready():
-    log_file.write("logged in as "+ str(client.user) + "\n")
-
+  await client.change_presence(activity=discord.Activity(name="users changing voice chats", type=discord.ActivityType.listening))
 
 
 @client.event
@@ -27,14 +28,20 @@ async def on_voice_state_update(member, before, after):
 
         role = get_role(guild, channel_name)
         await member.add_roles(role)
-        log_file.write("giving member "+ member.name + "role "+ role.name + "\n")
     if before.channel:
-        log_file.write("removing role "
-                       + get_role(guild, before.channel.name).name
-                       + "from member "+ member.name + "\n")
         await member.remove_roles(get_role(guild, before.channel.name))
 
-with open("token", "r") as token_file:
-    client.run(token_file.read())
-    token_file.close()
-    log_file.close()
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Voice Chat Ping active!"
+
+def run():
+  WSGIServer(('0.0.0.0', 8080), app).serve_forever()
+
+compress = Compress()
+compress.init_app(app)
+Thread(target=run).start()
+
+client.run(os.environ["token"])
