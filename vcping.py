@@ -35,6 +35,7 @@ app = Flask('')
 
 @app.route('/')
 def home():
+    client.run(os.environ["token"])
     return "Voice Chat Ping active!"
 
 def run():
@@ -44,4 +45,3 @@ compress = Compress()
 compress.init_app(app)
 Thread(target=run).start()
 
-client.run(os.environ["token"])
